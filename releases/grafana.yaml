@@ -8,6 +8,12 @@ repositories:
 releases:
 - name: grafana
   namespace: monitoring
+  labels:
+    chart: "grafana"
+    repo: "stable"
+    component: "grafana"
+    namespace: "monitoring"
+    vendor: "kubernetes"
   chart: helm-remote/grafana
   values:
     - rbac:
@@ -85,10 +91,9 @@ releases:
   labels:
     chart: "mysql"
     repo: "stable"
-    component: "monitoring"
+    component: "grafana"
     namespace: "monitoring"
     vendor: "kubernetes"
-    default: "false"
   chart: helm-remote/mysql
   wait: true
   installed: {{ env "GRAFANA_DB_INSTALLED" | default "true" }}

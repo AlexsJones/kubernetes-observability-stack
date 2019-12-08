@@ -10,6 +10,12 @@ releases:
 - name: prometheus
   namespace: monitoring
   chart: helm-remote/prometheus
+  labels:
+    chart: "prometheus"
+    repo: "stable"
+    component: "prometheus"
+    namespace: "monitoring"
+    vendor: "kubernetes"
   values:
     - rbac:
         create: true

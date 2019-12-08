@@ -10,6 +10,14 @@ releases:
 - name: envoy
   namespace: default
   chart: helm-remote/envoy
+  labels:
+    chart: "envoy"
+    repo: "stable"
+    component: "ingress"
+    namespace: "default"
+    vendor: "kubernetes"
+    default: "true"
+    version: 1.9.0
   version: 1.9.0
   values:
     - image:
