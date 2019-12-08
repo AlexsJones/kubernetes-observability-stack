@@ -8,7 +8,7 @@ repositories:
 
 releases:
 - name: weave-scope
-  namespace: default
+  namespace: monitoring
   chart: helm-remote/weave-scope
   values:
     - global:
