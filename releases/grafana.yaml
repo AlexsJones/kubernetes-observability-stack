@@ -1,0 +1,101 @@
+bases:
+  - ../common/environments.yaml
+---
+repositories:
+- name: helm-remote
+  url: {{ .Environment.Values.helm.remote.url }}
+
+releases:
+- name: grafana
+  namespace: monitoring
+  chart: helm-remote/grafana
+  values:
+    - rbac:
+        create: true
+      admin:
+        existingSecret: grafana-secret
+      datasources:
+        datasources.yaml:
+         apiVersion: 1
+         datasources:
+         - name: Prometheus
+           type: prometheus
+           url: http://prometheus-server.monitoring.svc.cluster.local:9090
+           access: proxy
+           isDefault: true
+      database:
+        type: mysql
+        host: grafana-db-mysql
+        name: '{{ env "GRAFANA_DB_NAME" | default "grafana"}}'
+        user: '{{ env "GRAFANA_DB_USER" | default "grafana" }}'
+        password: '{{ env "GRAFANA_DB_PASSWORD" | default "grafana"}}'
+      session:
+        provider: mysql
+        provider_config: {{ env "GRAFANA_DB_USER" | default "grafana" }}:{{ env "GRAFANA_DB_PASSWORD" | default "grafana"}}@tcp(grafana-db-mysql:3306)/{{ env "GRAFANA_DB_DATABASE_NAME" | default "grafana"}}
+        cookie_name: grafana_sess
+      dashboardProviders:
+        dashboardproviders.yaml:
+            apiVersion: 1
+            providers:
+            - name: 'default'
+              orgId: 1
+              folder: ''
+              type: file
+              disableDeletion: false
+              editable: true
+              options:
+                path: /var/lib/grafana/dashboards/default
+      dashboards:
+        default:
+         node-exporter:
+           gnetId: 1860
+           revision: 14
+           datasource: Prometheus
+      plugins:
+        - grafana-kubernetes-app
+      downloadDashboardsImage:
+        repository: {{ .Environment.Values.docker.proxy }}appropriate/curl
+      persistence:
+        image:
+          repository: {{ .Environment.Values.docker.proxy }}busybox
+      image:
+        repository: {{ .Environment.Values.docker.proxy }}grafana/grafana
+      sidecar:
+        image: {{ .Environment.Values.docker.proxy }}kiwigrid/k8s-sidecar:0.1.20
+        dashboards:
+          enabled: true
+          # label that the configmaps with dashboards are marked with
+          label: grafana_dashboard
+          # folder in the pod that should hold the collected dashboards
+          folder: /tmp/dashboards
+        datasources:
+          enabled: true
+          # label that the configmaps with datasources are marked with
+          label: grafana_datasource
+      service:
+        port: 3000
+        type: LoadBalancer
+
+#######################################################################################
+## Grafana DB                                                                        ##
+#######################################################################################
+
+- name: "grafana-db"
+  namespace: "monitoring"
+  labels:
+    chart: "mysql"
+    repo: "stable"
+    component: "monitoring"
+    namespace: "monitoring"
+    vendor: "kubernetes"
+    default: "false"
+  chart: helm-remote/mysql
+  wait: true
+  installed: {{ env "GRAFANA_DB_INSTALLED" | default "true" }}
+  values:
+  - mysqlUser: '{{ env "GRAFANA_DB_USER" | default "grafana" }}'
+    image: {{ .Environment.Values.docker.proxy }}mysql
+    mysqlPassword: '{{ env "GRAFANA_DB_PASSWORD" | default "grafana"}}'
+    mysqlRootPassword: '{{ env "GRAFANA_DB_ROOT_PASSWORD" | default "grafana"}}'
+    mysqlDatabase: '{{ env "GRAFANA_DB_NAME" | default "grafana"}}'
+    mysqlAllowEmptyPassword: false

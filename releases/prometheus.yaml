@@ -1,0 +1,19 @@
+---
+bases:
+  - ../common/environments.yaml
+---
+repositories:
+- name: helm-remote
+  url: {{ .Environment.Values.helm.remote.url }}
+
+releases:
+- name: prometheus
+  namespace: monitoring
+  chart: helm-remote/prometheus
+  values:
+    - rbac:
+        create: true
+      server:
+        service:
+          servicePort: 9090
+          type: LoadBalancer

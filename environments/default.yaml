@@ -1,0 +1,5 @@
+helm:
+  remote:
+    url: https://kubernetes-charts.storage.googleapis.com/
+docker:
+  proxy: ""

@@ -1,0 +1,22 @@
+---
+bases:
+  - ../common/environment.yaml
+---
+repositories:
+- name: helm-remote
+  url: {{ .Environment.Values.helm.remote.url }}
+
+releases:
+- name: envoy
+  namespace: default
+  chart: helm-remote/envoy
+  version: 1.9.0
+  values:
+    - image:
+        repository: {{ .Environment.Values.docker.proxy }}envoyproxy/envoy-alpine
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+      service:
+        type: LoadBalancer

@@ -1,0 +1,12 @@
+---
+bases:
+  - ../common/environment.yaml
+---
+repositories:
+- name: helm-remote
+  url: {{ .Environment.Values.helm.remote.url }}
+
+releases:
+- name: envoy
+  namespace: default
+  chart: helm-remote/weavescope
