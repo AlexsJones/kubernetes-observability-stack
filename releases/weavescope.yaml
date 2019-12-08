@@ -1,0 +1,15 @@
+---
+bases:
+  - ../common/environments.yaml
+---
+repositories:
+- name: helm-remote
+  url: {{ .Environment.Values.helm.remote.url }}
+
+releases:
+- name: envoy
+  namespace: default
+  chart: helm-remote/weave-scope
+  values:
+    - global:
+        image: {{ .Environment.Values.docker.proxy }}weaveworks/scope

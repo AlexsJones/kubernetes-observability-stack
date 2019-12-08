@@ -1,3 +1,5 @@
 helmfiles:
 - path: releases/prometheus.yaml
 - path: releases/grafana.yaml
+- path: releases/weavescope.yaml
+- path: releases/envoy.yaml

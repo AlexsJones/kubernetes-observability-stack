@@ -1,6 +1,6 @@
 ---
 bases:
-  - ../common/environment.yaml
+  - ../common/environments.yaml
 ---
 repositories:
 - name: helm-remote

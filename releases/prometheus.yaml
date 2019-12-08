@@ -13,6 +13,15 @@ releases:
   values:
     - rbac:
         create: true
+      kubeStateMetrics:
+        image:
+          repository: {{ .Environment.Values.docker.proxy }}quay.io/coreos/kube-state-metrics
+      alertmanager:
+        image:
+          repository: {{ .Environment.Values.docker.proxy }}prom/alertmanager
+      configmapReload:
+        image:
+          repository: {{ .Environment.Values.docker.proxy }}jimmidyson/configmap-reload
       server:
         service:
           servicePort: 9090
