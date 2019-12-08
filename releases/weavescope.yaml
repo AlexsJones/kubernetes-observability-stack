@@ -7,9 +7,10 @@ repositories:
   url: {{ .Environment.Values.helm.remote.url }}
 
 releases:
-- name: envoy
+- name: weave-scope
   namespace: default
   chart: helm-remote/weave-scope
   values:
     - global:
-        image: {{ .Environment.Values.docker.proxy }}weaveworks/scope
+        image:
+          repository: {{ .Environment.Values.docker.proxy }}weaveworks/scope
