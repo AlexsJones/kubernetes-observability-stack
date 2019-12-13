@@ -1,0 +1,20 @@
+bases:
+  - ../common/environments.yaml
+---
+repositories:
+- name: helm-remote
+  url: {{ .Environment.Values.helm.remote.url }}
+
+releases:
+- name: jaeger
+  namespace: monitoring
+  chart: helm-virtual/jaeger-operator
+  version: 2.12.1
+  values:
+    - image:
+        repository: {{ .Environment.Values.docker.proxy }}jaegertracing/jaeger-operator
+      rbac:
+        create: true
+        clusterRole: true
+      jaeger:
+        create: true

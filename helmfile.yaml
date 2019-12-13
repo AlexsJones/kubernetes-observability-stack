@@ -2,4 +2,6 @@ helmfiles:
 - path: releases/prometheus.yaml
 - path: releases/grafana.yaml
 - path: releases/weavescope.yaml
+- path: releases/elasticsearch.yaml
+- path: releases/jaeger.yaml
 - path: releases/envoy.yaml
