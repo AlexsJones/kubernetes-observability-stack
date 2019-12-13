@@ -83,7 +83,7 @@ metadata:
 spec:
   virtualHost:
     domains:
-    - '*'
+    - 'grafana.foo.bar'
     routes:
     - matchers:
       - prefix: /
@@ -92,26 +92,87 @@ spec:
           upstream:
             name: monitoring-grafana-3000
             namespace: gloo-system
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: prometheus-vs
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - 'prometheus.foo.bar'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          upstream:
+            name: monitoring-prometheus-server-9090
+            namespace: gloo-system   
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: weavescope-vs
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - 'weave.foo.bar'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          upstream:
+            name: monitoring-weave-scope-weave-scope-80
+            namespace: gloo-system    
+---
+apiVersion: gateway.solo.io/v1
+kind: VirtualService
+metadata:
+  name: jaeger-vs
+  namespace: gloo-system
+spec:
+  virtualHost:
+    domains:
+    - 'jaeger.foo.bar'
+    routes:
+    - matchers:
+      - prefix: /
+      routeAction:
+        single:
+          upstream:
+            name: monitoring-jaeger-jaeger-operator-jaeger-query-16686
+            namespace: gloo-system         
 EOF    
 ```
 
 ```bash
 glooctl get virtualservices                                                          
-+-----------------+--------------+---------+------+----------+-----------------+-------------------------------------+
-| VIRTUAL SERVICE | DISPLAY NAME | DOMAINS | SSL  |  STATUS  | LISTENERPLUGINS |               ROUTES                |
-+-----------------+--------------+---------+------+----------+-----------------+-------------------------------------+
-| grafana-vs      |              | *       | none | Accepted |                 | / ->                                |
-|                 |              |         |      |          |                 | gloo-system.monitoring-grafana-3000 |
-|                 |              |         |      |          |                 | (upstream)                          |
-+-----------------+--------------+---------+------+----------+-----------------+-------------------------------------+
-
++-----------------+--------------+--------------------+------+----------+-----------------+------------------------------------------------------------------+
+| VIRTUAL SERVICE | DISPLAY NAME |      DOMAINS       | SSL  |  STATUS  | LISTENERPLUGINS |                              ROUTES                              |
++-----------------+--------------+--------------------+------+----------+-----------------+------------------------------------------------------------------+
+| grafana-vs      |              | grafana.foo.bar    | none | Accepted |                 | / ->                                                             |
+|                 |              |                    |      |          |                 | gloo-system.monitoring-grafana-3000                              |
+|                 |              |                    |      |          |                 | (upstream)                                                       |
+| jaeger-vs       |              | jaeger.foo.bar     | none | Accepted |                 | / ->                                                             |
+|                 |              |                    |      |          |                 | gloo-system.monitoring-jaeger-jaeger-operator-jaeger-query-16686 |
+|                 |              |                    |      |          |                 | (upstream)                                                       |
+| prometheus-vs   |              | prometheus.foo.bar | none | Accepted |                 | / ->                                                             |
+|                 |              |                    |      |          |                 | gloo-system.monitoring-prometheus-server-9090                    |
+|                 |              |                    |      |          |                 | (upstream)                                                       |
+| weavescope-vs   |              | weave.foo.bar      | none | Accepted |                 | / ->                                                             |
+|                 |              |                    |      |          |                 | gloo-system.monitoring-weave-scope-weave-scope-80                |
+|                 |              |                    |      |          |                 | (upstream)                                                       |
++-----------------+--------------+--------------------+------+----------+-----------------+------------------------------------------------------------------+
 ```
 
 Test access via...
 
 ```bash
-curl $(glooctl proxy url)                                                              
-<a href="/login">Found</a>.
+curl --header 'Host: weave.foo.bar' $(glooctl proxy url)
 ```
 
 Tada!
