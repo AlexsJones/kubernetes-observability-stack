@@ -37,7 +37,7 @@ weave-scope  	monitoring	3       	2019-12-13 10:31:59.332558 +0000 UTC	deployed	
 _Generate a grafana password_
 
 ```bash
-kubectl create ns monitoring || true;
+kubectl create ns gloo-system || true;
 kubectl create ns monitoring || true;
 
 kubectl --namespace monitoring create secret generic grafana-secret \
