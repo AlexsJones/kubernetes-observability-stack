@@ -31,6 +31,9 @@ weave-scope  	monitoring	3       	2019-12-13 10:31:59.332558 +0000 UTC	deployed	
   gke-standard-cluster-2-default-pool-29c1081e-4dhq   301m         15%    3467Mi          61%
   gke-standard-cluster-2-default-pool-29c1081e-vd3n   413m         21%    2940Mi          52%
   ```
+  
+  _Or you can try running microk8s or minikube locally_
+  
 - Helm ^3.0.0
 - Helmfile
 
