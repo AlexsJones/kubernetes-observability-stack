@@ -1,6 +1,8 @@
 # kubernetes-cluster-helmfile
 
-A basic cluster with observability using helmfile
+Sometimes we want to see what a full k8s observability stack might look like.
+Here is a basic cluster with observability using helmfile.
+We start from these sorts of building blocks to measure the golden signals we care about in production.
 
 Deploys the following into the cluster with auto wiring
 
