@@ -8,7 +8,7 @@ repositories:
 releases:
 - name: jaeger
   namespace: monitoring
-  chart: helm-virtual/jaeger-operator
+  chart: helm-remote/jaeger-operator
   version: 2.12.1
   values:
     - image:

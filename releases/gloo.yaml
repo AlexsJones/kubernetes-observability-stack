@@ -3,13 +3,13 @@ bases:
   - ../common/environments.yaml
 ---
 repositories:
-- name: helm-remote
+- name: solo-public
   url: https://storage.googleapis.com/solo-public-helm
 
 releases:
 - name: gloo
   namespace: gloo-system
-  chart: helm-remote/gloo
+  chart: solo-public/gloo
   labels:
     chart: "gloo"
     repo: "stable"

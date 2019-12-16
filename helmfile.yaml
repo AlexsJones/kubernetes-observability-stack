@@ -1,7 +1,25 @@
 helmfiles:
 - path: releases/prometheus.yaml
+  selectors:
+    - name=prometheus
+    - type=observability
 - path: releases/grafana.yaml
+  selectors:
+    - name=grafana
+    - type=observability
 - path: releases/weavescope.yaml
+  selectors:
+    - name=weavescope
+    - type=data
 - path: releases/elasticsearch.yaml
+  selectors:
+    - name=elasticsearch
+    - type=data
 - path: releases/jaeger.yaml
+  selectors:
+    - name=jaeger
+    - type=observability
 - path: releases/gloo.yaml
+  selectors:
+    - name=gloo
+    - type=ingress

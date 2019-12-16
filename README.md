@@ -176,3 +176,8 @@ curl --header 'Host: weave.foo.bar' $(glooctl proxy url)
 ```
 
 Tada!
+
+
+## Note for those testing with microk8s
+
+https://github.com/ubuntu/microk8s/issues/749

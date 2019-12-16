@@ -8,7 +8,7 @@ repositories:
 releases:
 - name: elasticsearch
   namespace: monitoring
-  chart: helm-virtual/elasticsearch
+  chart: helm-remote/elasticsearch
   version: 1.32.1
   values:
     - image:
