@@ -1,18 +1,21 @@
-bases:
-  - ../common/environments.yaml
----
 repositories:
 - name: helm-remote
-  url: {{ .Environment.Values.helm.remote.url }}
+  url: https://kubernetes-charts.storage.googleapis.com/
 
 releases:
 - name: jaeger
   namespace: monitoring
   chart: helm-remote/jaeger-operator
   version: 2.12.1
+  labels:
+    chart: "jaeger-operator"
+    repo: "helm-remote"
+    component: "jaeger-operator"
+    namespace: "monitoring"
+    vendor: "cncf"
   values:
     - image:
-        repository: {{ .Environment.Values.docker.proxy }}jaegertracing/jaeger-operator
+        repository: jaegertracing/jaeger-operator
       rbac:
         create: true
         clusterRole: true

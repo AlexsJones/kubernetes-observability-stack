@@ -1,10 +1,6 @@
----
-bases:
-  - ../common/environments.yaml
----
 repositories:
 - name: helm-remote
-  url: {{ .Environment.Values.helm.remote.url }}
+  url: https://kubernetes-charts.storage.googleapis.com/
 
 releases:
 - name: weave-scope
@@ -19,4 +15,4 @@ releases:
   values:
     - global:
         image:
-          repository: {{ .Environment.Values.docker.proxy }}weaveworks/scope
+          repository: weaveworks/scope

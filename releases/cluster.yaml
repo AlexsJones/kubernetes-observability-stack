@@ -1,0 +1,22 @@
+helmfiles:
+- path: elasticsearch-operator.yaml
+  selectors:
+  - name=elasticsearch-operator
+- path: kibana.yaml
+  selectors:
+  - name=kibana
+- path: prometheus-operator.yaml
+  selectors:
+  - name=prometheus-operator
+- path: jaeger-operator.yaml
+  selectors:
+  - name=jaeger-operator
+- path: weavescope.yaml
+  selectors:
+  - name=weavescope
+- path: grafana.yaml
+  selectors:
+  - name=grafana
+- path: gloo.yaml
+  selectors:
+  - name=gloo

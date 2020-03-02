@@ -1,0 +1,14 @@
+repositories:
+- name: elastic
+  url:  https://helm.elastic.co
+
+releases:
+- name: kibana
+  namespace: monitoring
+  chart: elastic/kibana
+  labels:
+    chart: "kibana"
+    repo: "helm-remote"
+    component: "kibana"
+    namespace: "monitoring"
+    vendor: "elastic"
