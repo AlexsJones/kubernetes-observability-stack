@@ -1,4 +1,7 @@
 helmfiles:
+- path: fluent-bit.yaml
+  selectors:
+  - name=fluent-bit
 - path: elasticsearch-operator.yaml
   selectors:
   - name=elasticsearch-operator
