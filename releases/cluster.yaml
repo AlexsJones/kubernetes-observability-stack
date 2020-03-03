@@ -20,6 +20,3 @@ helmfiles:
 - path: grafana.yaml
   selectors:
   - name=grafana
-- path: gloo.yaml
-  selectors:
-  - name=gloo

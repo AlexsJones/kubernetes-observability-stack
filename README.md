@@ -7,7 +7,6 @@ Deploys the following into the cluster with auto wiring:
 - Jaeger-operator
 - Prometheus-operator
 - Weavescope
-- Gloo
 - Fluent-bit
 - Kibana
 - Grafana
@@ -42,23 +41,3 @@ make deploy
 make down
 ```
 
-
-### Bonus
-
-_Deploy a Jaeger operator for the local ES cluster_
-
-```bash
-kubectl apply -n monitoring -f - << EOF
-apiVersion: jaegertracing.io/v1
-kind: Jaeger
-metadata:
-  name: elasticsearch-operator
-spec:
-  strategy: production
-  storage:
-    type: elasticsearch
-    options:
-      es:
-        server-urls: http://elasticsearch-client:9200
-EOF
-```
