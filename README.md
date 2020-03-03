@@ -19,6 +19,9 @@ prometheus            	monitoring	3       	2020-03-01 21:40:46.123752464 +0000 U
 
 ![](images/weavescope.png)
 
+
+![](images/kibana.png)
+
 ## Requirements
 
 - Kind
