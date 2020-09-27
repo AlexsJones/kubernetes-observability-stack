@@ -1,8 +1,10 @@
 # kubernetes-observability-stack
 
-Here is a [helmfile](https://github.com/roboll/helmfile) recipe for creating a cluster with a basic level of observability.
+This repository deploys some simple but useful observability systems into a cluster.
+It uses helm3 for Kubernetes manifest package management.
 
 Deploys the following into the cluster with auto wiring:
+- Metrics-server
 - Elasticsearch-operator
 - Jaeger-operator
 - Prometheus-operator
@@ -11,27 +13,18 @@ Deploys the following into the cluster with auto wiring:
 - Kibana
 - Grafana
 
-![](images/grafana.png)
-
-
-![](images/weavescope.png)
-
-
-![](images/kibana.png)
-
 ## Requirements
 
 - Kind
 - Kubectl
 - Helm ^3.0.0
-- Helmfile
 
 ## Install
 
 
 ```bash
 make up
-make deploy
+make helm-install
 ```
 
 
@@ -41,3 +34,4 @@ make deploy
 make down
 ```
 
+## Pretty pictures
