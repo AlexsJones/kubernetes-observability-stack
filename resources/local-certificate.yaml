@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: first-tls
+  namespace: kube-system
+spec:
+  secretName: first-tls
+  dnsNames:
+  - "*.sandbox.local"
+  issuerRef:
+    name: selfsigned-issuer
