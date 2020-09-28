@@ -10,6 +10,10 @@ Deploys the following into the cluster with auto wiring:
 - Prometheus-operator
 - Weavescope
 - Nginx Ingress
+- Cert-manager
+- Nginx
+
+The observability all lives within `kube-system` and is accessible by an ingress route that maps to a dynamically created secret via cert manager.
 
 <br />
 
