@@ -1,0 +1,47 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: monitoring-ingress
+  namespace: kube-system
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+    - hosts:
+      - grafana.sandbox.local
+      - weave.sandbox.local
+      - prometheus.sandbox.local
+      - alert.sandbox.local
+      secretName: first-tls
+  rules:
+    - host: grafana.sandbox.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: prom-grafana
+              servicePort: 80
+    - host: alert.sandbox.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: prom-kube-prometheus-stack-alertmanager
+              servicePort: 9093
+    - host: prometheus.sandbox.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: prom-kube-prometheus-stack-prometheus
+              servicePort: 9090
+    - host: weave.sandbox.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: weave-weave-scope
+              servicePort: 80

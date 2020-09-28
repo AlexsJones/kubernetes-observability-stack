@@ -1,17 +1,32 @@
 # kubernetes-observability-stack
 
 This repository deploys some simple but useful observability systems into a cluster.
-It uses helm3 for Kubernetes manifest package management.
+It uses helm3 for Kubernetes manifest package management and deploys a toy observability stack into KIND.
+
 
 Deploys the following into the cluster with auto wiring:
+
 - Metrics-server
-- Elasticsearch-operator
-- Jaeger-operator
 - Prometheus-operator
 - Weavescope
-- Fluent-bit
-- Kibana
-- Grafana
+- Nginx Ingress
+
+<br />
+
+<p align="left">
+<img src="./images/6.png" width="50%" />
+<br />
+</p>
+
+<br />
+
+<p align="left">
+<img src="./images/5.png" width="50%" />
+<br />
+</p>
+
+
+
 
 ## Requirements
 
@@ -24,8 +39,34 @@ Deploys the following into the cluster with auto wiring:
 
 ```bash
 make up
-make helm-install
+make install
 ```
+
+### Using local ingress
+
+
+Set these local `/etc/hosts` overrides...
+
+<p align="left">
+<img src="./images/4.png" width="50%" />
+<br />
+</p>
+
+Now you'll be able to access the self-signed certificate for the cluster...
+<p align="left">
+<img src="./images/3.png" width="50%" />
+<br />
+</p>
+
+`https://<service>.sandbox.local` will now work...
+
+<p align="left">
+<img src="./images/2.png" width="50%" />
+<br />
+</p>
+
+
+
 
 
 ## Delete cluster
@@ -33,5 +74,3 @@ make helm-install
 ```bash
 make down
 ```
-
-## Pretty pictures
